@@ -14,5 +14,5 @@ sniffer:
 	docker exec -it app-order ./vendor/bin/phpcbf src/
 
 stan:
-	docker exec -it app-order vendor/bin/phpstan analyse
+	docker exec -it app-order vendor/bin/phpstan analyse src/
 ##https://phpstan.org/user-guide/rule-levels

@@ -29,19 +29,19 @@ services:
     networks:
       - backend
 
-#  mysql-order:
-#   image: mysql:5.7
-#   container_name: mysql-order
-#   restart: unless-stopped
-#   env_file:
-#     - .env
-#   environment:
-#     SERVICE_TAGS: dev
-#     SERVICE_NAME: mysql
-#   volumes:
-#     - ./mysql:/docker-entrypoint-initdb.d
-#   networks:
-#     - backend
+  mysql-order:
+    image: mysql:5.7
+    container_name: mysql-order
+    restart: unless-stopped
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "dev"
+      MYSQL_DATABASE: "order"
+#    volumes:
+#      - ./scripts/mysql:/docker-entrypoint-initdb.d:rw
+    networks:
+      - backend
 
 networks:
   backend:

@@ -2,10 +2,9 @@
 
 namespace App\Domain\Order;
 
-use App\Domain\Item\Item;
-
 /**
  * Class Order
+ *
  * @package App\Domain\Order
  */
 final class Order
@@ -21,7 +20,7 @@ final class Order
     /**
      * @var int
      */
-    private $total;
+    private $price;
 
     /**
      * @var string
@@ -34,10 +33,10 @@ final class Order
 
     /**
      * Order constructor.
-     * @param array $items
+     *
+     * @param array  $items
      * @param string $description
      * @param string $typePayment
-     * @param int $total
      */
     public function __construct(array $items, string $description, string $typePayment)
     {
@@ -45,27 +44,18 @@ final class Order
         $this->items = $items;
         $this->description = $description;
         $this->typePayment = $typePayment;
-//        $this->total = $total;
-    }
-
-    /**
-     * @param Item $item
-     */
-    public function addItem(Item $item)
-    {
-        $this->items[] = $item;
     }
 
     /**
      * @return int
      */
-    public function total(): int
+    public function price(): int
     {
         foreach ($this->items as $item) {
-            $this->total += $item->total();
+            $this->price += $item->total();
         }
 
-        return $this->total;
+        return $this->price;
     }
 
     /**
@@ -78,7 +68,7 @@ final class Order
             'description' => $this->description,
             'items' => $this->itemSerialize(),
             'type_payment' => $this->typePayment,
-            'total' => $this->total(),
+            'price' => $this->price(),
         ];
     }
 

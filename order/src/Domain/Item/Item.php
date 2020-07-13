@@ -4,6 +4,7 @@ namespace App\Domain\Item;
 
 /**
  * Class Item
+ *
  * @package App\Domain\Item
  */
 final class Item
@@ -28,6 +29,7 @@ final class Item
 
     /**
      * Item constructor.
+     *
      * @param $id
      * @param $description
      * @param $price
