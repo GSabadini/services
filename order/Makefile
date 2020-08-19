@@ -1,3 +1,11 @@
+DOCKER_EXEC = docker exec -it app-order
+
+configure:
+	${DOCKER_EXEC} composer update
+
+init:
+	cp .env .env.example
+
 up:
 	docker-compose up -d
 
@@ -8,11 +16,19 @@ build:
 	docker-compose build
 
 bash:
-	docker exec -it app-order bash
+	${DOCKER_EXEC} bash
 
 sniffer:
-	docker exec -it app-order ./vendor/bin/phpcbf src/
+	${DOCKER_EXEC} composer sniffer
 
 stan:
-	docker exec -it app-order vendor/bin/phpstan analyse src/
+	${DOCKER_EXEC} composer stan
 ##https://phpstan.org/user-guide/rule-levels
+
+mess:
+	${DOCKER_EXEC} composer mess
+
+test:
+	${DOCKER_EXEC} composer test
+
+code-review: sniffer stan mess test

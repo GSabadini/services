@@ -1,2 +1,2 @@
-<?php 
-    require '../src/webserver.php';
+<?php
+require '../src/webserver.php';

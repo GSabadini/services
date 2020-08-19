@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
-namespace App\Domain\Order;
+namespace App\Model\Order;
 
 /**
  * Class Order
  *
- * @package App\Domain\Order
+ * @package App\Model\Order
  */
 final class Order
 {
@@ -13,10 +14,12 @@ final class Order
      * @var string
      */
     private $id;
+
     /**
      * @var array
      */
     private $items;
+
     /**
      * @var int
      */
@@ -25,31 +28,26 @@ final class Order
     /**
      * @var string
      */
-    private $description;
-    /**
-     * @var string
-     */
     private $typePayment;
 
     /**
      * Order constructor.
      *
-     * @param array  $items
-     * @param string $description
+     * @param string $id
      * @param string $typePayment
+     * @param float  $price
      */
-    public function __construct(array $items, string $description, string $typePayment)
+    public function __construct(string $id, string $typePayment, float $price)
     {
-        $this->id = "id";
-        $this->items = $items;
-        $this->description = $description;
+        $this->id = $id;
         $this->typePayment = $typePayment;
+        $this->price = $price;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function price(): int
+    public function price(): float
     {
         foreach ($this->items as $item) {
             $this->price += $item->total();
@@ -65,10 +63,9 @@ final class Order
     {
         return [
             'id' => $this->id,
-            'description' => $this->description,
-            'items' => $this->itemSerialize(),
+//            'items' => $this->itemSerialize(),
             'type_payment' => $this->typePayment,
-            'price' => $this->price(),
+            'price' => $this->price,
         ];
     }
 
