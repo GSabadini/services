@@ -5,14 +5,14 @@ namespace App\Driven\Database\DAO\Order;
 
 use App\Driven\Database;
 use App\Model\Order\Order;
-use App\Model\Order\OrderDAO;
+use App\Model\Order\IOrderDAO;
 
 /**
  * Class OrderDAOInMemory
  *
  * @package App\Driven\Database\DAO\Order
  */
-final class OrderDAOInMemory implements OrderDAO
+final class OrderDAOInMemory implements IOrderDAO
 {
     /**
      * @var
@@ -20,7 +20,7 @@ final class OrderDAOInMemory implements OrderDAO
     private $database;
 
     /**
-     * OrderDAO constructor.
+     * IOrderDAO constructor.
      *
      * @param $database
      */

@@ -4,20 +4,20 @@ declare(strict_types=1);
 namespace App\Driver\WebApi\Action\Order;
 
 use App\Driver\WebApi\Action\Action;
-use App\Service\Order\OrderService;
+use App\Service\Order\ICreateOrderService;
+use App\Service\Order\OrderDTO;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 
 /**
  * Class CreateOrderAction
- *
  * @package App\Driver\WebApi\Action
  */
 final class CreateOrderAction extends Action
 {
     /**
-     * @var OrderService
+     * @var ICreateOrderService
      */
     private $service;
 
@@ -26,8 +26,14 @@ final class CreateOrderAction extends Action
      */
     public $logger;
 
-    public function __construct(LoggerInterface $logger, OrderService $service)
+    /**
+     * CreateOrderAction constructor.
+     * @param LoggerInterface $logger
+     * @param ICreateOrderService $service
+     */
+    public function __construct(LoggerInterface $logger, ICreateOrderService $service)
     {
+        parent::__construct($logger);
         $this->logger = $logger;
         $this->service = $service;
     }
@@ -37,10 +43,18 @@ final class CreateOrderAction extends Action
      */
     protected function action(): Response
     {
-        $order = $this->service->create();
+        $parsedBody = $this->request->getParsedBody();
 
-        $this->logger->info("Create order.");
+        $response = $this->service->create(
+            new OrderDTO(
+                $parsedBody->id,
+                $parsedBody->type_payment,
+                $parsedBody->price
+            )
+        );
 
-        return $this->respondWithData($order->jsonSerialize(), 201);
+        $this->logger->info("Create order.", ["key:" => "create_order"]);
+
+        return $this->respondWithData($response, 201);
     }
 }

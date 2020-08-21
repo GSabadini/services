@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 /**
- * Interface OrderDAO
+ * Interface IOrderDAO
  *
  * @package App\Model\Order
  */
-interface OrderDAO
+interface IOrderDAO
 {
     /**
      * @param  Order $order

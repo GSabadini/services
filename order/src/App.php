@@ -39,13 +39,16 @@ final class App
         $this->app = AppFactory::create();
 
         $this->registerRoutes();
+        $this->registerMiddlewares();
         $this->addErrorMiddleware();
     }
 
     public function run():void
     {
+        $serverRequestCreator = ServerRequestCreatorFactory::create();
+        $request = $serverRequestCreator->createServerRequestFromGlobals();
         // Run App & Emit Response
-        $response = $this->app->handle($this->requestGlobal);
+        $response = $this->app->handle($request);
         $responseEmitter = new ResponseEmitter();
         $responseEmitter->emit($response);
     }
@@ -77,6 +80,8 @@ final class App
 
     private function registerMiddlewares(): void
     {
+        $middlewares = include __DIR__ . '/middlewares.php';
+        $middlewares($this->app);
     }
 
     private function addErrorMiddleware(): void
@@ -86,7 +91,7 @@ final class App
         $container = $this->getContainer();
 
         /**
- * @var bool $displayErrorDetails 
+ * @var bool $displayErrorDetails
 */
         $displayErrorDetails = $container->get('settings')['displayErrorDetails'];
 

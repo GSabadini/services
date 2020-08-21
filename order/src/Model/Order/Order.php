@@ -5,7 +5,6 @@ namespace App\Model\Order;
 
 /**
  * Class Order
- *
  * @package App\Model\Order
  */
 final class Order
@@ -14,11 +13,6 @@ final class Order
      * @var string
      */
     private $id;
-
-    /**
-     * @var array
-     */
-    private $items;
 
     /**
      * @var int
@@ -42,43 +36,5 @@ final class Order
         $this->id = $id;
         $this->typePayment = $typePayment;
         $this->price = $price;
-    }
-
-    /**
-     * @return float
-     */
-    public function price(): float
-    {
-        foreach ($this->items as $item) {
-            $this->price += $item->total();
-        }
-
-        return $this->price;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-        //            'items' => $this->itemSerialize(),
-            'type_payment' => $this->typePayment,
-            'price' => $this->price,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function itemSerialize(): array
-    {
-        $json = [];
-        foreach ($this->items as $item) {
-            $json[] = $item->serialize();
-        }
-
-        return $json;
     }
 }

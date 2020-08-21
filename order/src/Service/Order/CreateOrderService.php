@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 namespace App\Service\Order;
 
-use App\Model\Order\OrderDAO;
+use App\Model\Order\IOrderDAO;
 use App\Model\Order\Order;
 
 /**
- * Class Order
- *
+ * Class CreateOrderService
  * @package App\Service\Order
  */
-final class OrderService
+final class CreateOrderService implements ICreateOrderService
 {
     /**
-     * @var OrderDAO
+     * @var IOrderDAO
      */
     private $dao;
 
@@ -23,16 +22,23 @@ final class OrderService
      *
      * @param $dao
      */
-    public function __construct(OrderDAO $dao)
+    public function __construct(IOrderDAO $dao)
     {
         $this->dao = $dao;
     }
 
     /**
+     * @param OrderDTO $dto
      * @return Order
      */
-    public function create(): Order
+    public function create(OrderDTO $dto): Order
     {
-        return $this->dao->create(new Order("id", "credit-card", 75.45));
+        return $this->dao->create(
+            new Order(
+                $dto->getId(),
+                $dto->getTypePayment(),
+                $dto->getPrice()
+            )
+        );
     }
 }

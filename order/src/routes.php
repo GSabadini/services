@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Driver\WebApi\Action\Health\CheckHealthAction;
+use App\Driver\WebApi\Middleware\JsonBodyParserMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -19,7 +20,10 @@ return function (App $app) {
     $app->group('/v1', function (Group $group) {
             $group->get('/health', CheckHealthAction::class)->setName('check_health');
 
-            $group->post('/orders', CreateOrderAction::class)->setName('create_order');
+            $group
+                ->post('/orders', CreateOrderAction::class)
+                ->add(JsonBodyParserMiddleware::class)
+                ->setName('create_order');
         }
     );
 };
