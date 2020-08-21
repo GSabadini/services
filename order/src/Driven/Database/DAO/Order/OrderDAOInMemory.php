@@ -9,6 +9,7 @@ use App\Model\Order\OrderDAO;
 
 /**
  * Class OrderDAOInMemory
+ *
  * @package App\Driven\Database\DAO\Order
  */
 final class OrderDAOInMemory implements OrderDAO
@@ -29,11 +30,11 @@ final class OrderDAOInMemory implements OrderDAO
     }
 
     /**
-     * @param Order $order
+     * @param  Order $order
      * @return Order
      */
     public function create(Order $order): Order
     {
-      return $order;
+        return $order;
     }
 }

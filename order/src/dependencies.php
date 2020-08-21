@@ -12,7 +12,8 @@ use App\Model\Order\OrderDAO;
 use App\Service\Order\OrderService;
 
 return function (ContainerBuilder $containerBuilder) {
-    $containerBuilder->addDefinitions([
+    $containerBuilder->addDefinitions(
+        [
         LoggerInterface::class => function (ContainerInterface $c) {
             $settings = $c->get('settings');
 
@@ -27,12 +28,30 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
-        OrderDAO::class => \DI\autowire(OrderDAOInMemory::class),
-        'OrderDAOInMemory' => function (Container $c) {
+        //        Connection::class => function (ContainerInterface $c) {
+        //            try {
+        //                $settings = $c->get('settings');
+        //
+        //                $dns = sprintf("mysql:host=%s;dbname=%s", $settings['mysql']['host'], $settings['mysql']['database']);
+        //                $conn = new PDO(
+        //                    $dns,
+        //                    $settings['mysql']['username'],
+        //                    $settings['mysql']['pass']
+        //                );
+        //                // set the PDO error mode to exception
+        //                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //                echo "Connected successfully";
+        //                return $conn;
+        //            } catch(PDOException $e) {
+        //                echo "Connection failed: " . $e->getMessage();
+        //            }
+        //        },
+        OrderDAO::class => function (ContainerInterface $c) {
             return new OrderDAOInMemory('');
         },
         OrderService::class => function (ContainerInterface $c) {
-            return new OrderService(new OrderDAOInMemory(''));
+            return new OrderService($c->get(OrderDAO::class));
         },
-    ]);
+        ]
+    );
 };

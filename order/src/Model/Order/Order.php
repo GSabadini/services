@@ -59,11 +59,11 @@ final class Order
     /**
      * @return array
      */
-    public function serialize(): array
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
-//            'items' => $this->itemSerialize(),
+        //            'items' => $this->itemSerialize(),
             'type_payment' => $this->typePayment,
             'price' => $this->price,
         ];
