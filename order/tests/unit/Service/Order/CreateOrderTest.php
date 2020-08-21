@@ -6,7 +6,7 @@ use App\Model\Order\Order;
 use App\Service\Order\OrderService;
 use PHPUnit\Framework\TestCase;
 
-class OrderServiceTest extends TestCase
+class CreateOrderTest extends TestCase
 {
     public function testOne()
     {

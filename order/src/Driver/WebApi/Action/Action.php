@@ -9,6 +9,11 @@ use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * Class Action
+ *
+ * @package App\Driver\WebApi\Action
+ */
 abstract class Action
 {
     /**
@@ -56,7 +61,7 @@ abstract class Action
         try {
             return $this->action();
         } catch (\Exception $e) {
-            /* TODO ver Exception correta para retornar do Service/Model */
+            /* TODO ver Exception correta para retornar do Service/Domain */
             throw new HttpNotFoundException($this->request, $e->getMessage());
         }
     }

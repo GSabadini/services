@@ -1,18 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Driven\Database\DAO\Order;
+namespace App\Driven\Database\Repository\Order;
 
-use App\Driven\Database;
-use App\Model\Order\Order;
-use App\Model\Order\IOrderDAO;
+use App\Domain\Order\Order;
+use App\Domain\Order\OrderRepository;
 
 /**
- * Class OrderDAOInMemory
+ * Class OrderRepoInMemory
  *
- * @package App\Driven\Database\DAO\Order
+ * @package App\Driven\Database\Repository\Order
  */
-final class OrderDAOInMemory implements IOrderDAO
+final class OrderRepoInMemory implements OrderRepository
 {
     /**
      * @var
@@ -20,7 +19,7 @@ final class OrderDAOInMemory implements IOrderDAO
     private $database;
 
     /**
-     * IOrderDAO constructor.
+     * OrderRepository constructor.
      *
      * @param $database
      */

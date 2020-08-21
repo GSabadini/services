@@ -17,7 +17,12 @@ use Slim\Exception\HttpUnauthorizedException;
 use Slim\Handlers\ErrorHandler as SlimErrorHandler;
 use Throwable;
 
-class HttpErrorHandler extends SlimErrorHandler
+/**
+ * Class HttpErrorHandler
+ *
+ * @package App\Driver\WebApi\Handler
+ */
+final class HttpErrorHandler extends SlimErrorHandler
 {
     /**
      * @inheritdoc

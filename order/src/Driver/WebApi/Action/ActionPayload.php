@@ -5,7 +5,12 @@ namespace App\Driver\WebApi\Action;
 
 use JsonSerializable;
 
-class ActionPayload implements JsonSerializable
+/**
+ * Class ActionPayload
+ *
+ * @package App\Driver\WebApi\Action
+ */
+final class ActionPayload implements JsonSerializable
 {
     /**
      * @var int

@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Order;
+namespace App\Domain\Order;
 
 /**
- * Interface IOrderDAO
+ * Interface OrderRepository
  *
- * @package App\Model\Order
+ * @package App\Domain\Order
  */
-interface IOrderDAO
+interface OrderRepository
 {
     /**
      * @param  Order $order

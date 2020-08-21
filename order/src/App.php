@@ -6,6 +6,7 @@ namespace App;
 use App\Driver\WebApi\Handler\HttpErrorHandler;
 use App\Driver\WebApi\Handler\ShutdownHandler;
 use App\Driver\WebApi\ResponseEmitter\ResponseEmitter;
+use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use DI\ContainerBuilder;
@@ -29,6 +30,8 @@ final class App
 
     /**
      * App constructor.
+     *
+     * @throws \Exception
      */
     public function __construct()
     {
@@ -39,7 +42,11 @@ final class App
         $this->app = AppFactory::create();
 
         $this->registerRoutes();
-        $this->registerMiddlewares();
+        //        $this->registerMiddlewares();
+
+        $this->app->addRoutingMiddleware();
+        $this->app->addBodyParsingMiddleware();
+
         $this->addErrorMiddleware();
     }
 
@@ -55,8 +62,9 @@ final class App
 
     /**
      * @return ContainerInterface
+     * @throws \Exception
      */
-    private function buildContainer()
+    private function buildContainer(): ContainerInterface
     {
         $containerBuilder = new ContainerBuilder();
 
@@ -80,7 +88,7 @@ final class App
 
     private function registerMiddlewares(): void
     {
-        $middlewares = include __DIR__ . '/middlewares.php';
+        $middlewares = include __DIR__ . '/middleware.php';
         $middlewares($this->app);
     }
 
@@ -91,8 +99,8 @@ final class App
         $container = $this->getContainer();
 
         /**
- * @var bool $displayErrorDetails
-*/
+         * @var bool $displayErrorDetails
+        */
         $displayErrorDetails = $container->get('settings')['displayErrorDetails'];
 
         // Create Error Handler
@@ -111,7 +119,7 @@ final class App
     /**
      * @return ContainerInterface|null
      */
-    private function getContainer()
+    private function getContainer(): ContainerInterface
     {
         return $this->app->getContainer();
     }

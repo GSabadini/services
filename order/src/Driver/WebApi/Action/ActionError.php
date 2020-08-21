@@ -5,7 +5,12 @@ namespace App\Driver\WebApi\Action;
 
 use JsonSerializable;
 
-class ActionError implements JsonSerializable
+/**
+ * Class ActionError
+ *
+ * @package App\Driver\WebApi\Action
+ */
+final class ActionError implements JsonSerializable
 {
     public const BAD_REQUEST = 'BAD_REQUEST';
     public const INSUFFICIENT_PRIVILEGES = 'INSUFFICIENT_PRIVILEGES';

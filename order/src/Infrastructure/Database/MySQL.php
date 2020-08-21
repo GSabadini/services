@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Infra\Database;
+namespace App\Infrastructure\Database;
 
 /**
  * Class MySQL
  *
- * @package App\Infra\Database
+ * @package App\Infrastructure\Database
  */
 final class MySQL
 {

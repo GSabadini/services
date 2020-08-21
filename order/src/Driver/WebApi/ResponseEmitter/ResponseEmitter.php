@@ -6,7 +6,12 @@ namespace App\Driver\WebApi\ResponseEmitter;
 use Psr\Http\Message\ResponseInterface;
 use Slim\ResponseEmitter as SlimResponseEmitter;
 
-class ResponseEmitter extends SlimResponseEmitter
+/**
+ * Class ResponseEmitter
+ *
+ * @package App\Driver\WebApi\ResponseEmitter
+ */
+final class ResponseEmitter extends SlimResponseEmitter
 {
     /**
      * {@inheritdoc}

@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
+use App\Domain\Order\OrderRepository;
+use App\Driven\Database\DatabaseAdapter;
+use App\Service\Order\CreateOrder;
 use App\Service\Order\CreateOrderService;
-use App\Service\Order\ICreateOrderService;
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
-use App\Driven\Database\DAO\Order\OrderDAOInMemory;
-use App\Model\Order\IOrderDAO;
-use App\Service\Order\OrderService;
+use App\Driven\Database\Repository\Order\OrderRepoInMemory;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions(
@@ -30,32 +30,34 @@ return function (ContainerBuilder $containerBuilder) {
 
                 return $logger;
             },
-            //        Connection::class => function (ContainerInterface $c) {
-            //            try {
-            //                $settings = $c->get('settings');
-            //
-            //                $dns = sprintf("mysql:host=%s;dbname=%s", $settings['mysql']['host'], $settings['mysql']['database']);
-            //                $conn = new PDO(
-            //                    $dns,
-            //                    $settings['mysql']['username'],
-            //                    $settings['mysql']['pass']
-            //                );
-            //                // set the PDO error mode to exception
-            //                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //                echo "Connected successfully";
-            //                return $conn;
-            //            } catch(PDOException $e) {
-            //                echo "Connection failed: " . $e->getMessage();
-            //            }
-            //        },
-            IOrderDAO::class => function (ContainerInterface $c) {
-                return new OrderDAOInMemory('');
+        //            Connection::class => function (ContainerInterface $c) {
+        //                $logger = $c->get(LoggerInterface::class);
+        //
+        //                try {
+        //                    $settings = $c->get('settings');
+        //
+        //                    $dns = sprintf("mysql:host=%s;dbname=%s", $settings['mysql']['host'], $settings['mysql']['database']);
+        //                    $conn = new PDO(
+        //                        $dns,
+        //                        $settings['mysql']['username'],
+        //                        $settings['mysql']['pass']
+        //                    );
+        //                    // set the PDO error mode to exception
+        //                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //                    echo "Connected successfully";
+        //                    return new DatabaseAdapter($conn, $logger);
+        //                } catch(PDOException $e) {
+        //                    $logger->info("Connection failed: " . $e->getMessage());
+        //                }
+        //            },
+            OrderRepository::class => function (ContainerInterface $c) {
+                return new OrderRepoInMemory('');
             },
-            OrderService::class => function (ContainerInterface $c) {
-                return new OrderService($c->get(IOrderDAO::class));
-            },
-            ICreateOrderService::class => function (ContainerInterface $c) {
-                return new CreateOrderService($c->get(IOrderDAO::class));
+        //            OrderRepository::class => function (ContainerInterface $c) {
+        //                return new OrderRepoMySQL($c->get(Connection::class));
+        //            },
+            CreateOrderService::class => function (ContainerInterface $c) {
+                return new CreateOrder($c->get(OrderRepository::class), $c->get(LoggerInterface::class));
             },
         ]
     );

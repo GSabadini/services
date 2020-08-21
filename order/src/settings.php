@@ -9,7 +9,7 @@ return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions(
         [
         'settings' => [
-            'displayErrorDetails' => false, // Should be set to false in production
+            'displayErrorDetails' => true, // Should be set to false in production
             'logger' => [
                 'name' => 'app-order',
         //                'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
@@ -20,7 +20,7 @@ return function (ContainerBuilder $containerBuilder) {
                 'host' => 'mysql-order',
                 'database' => 'orders',
                 'user' => 'dev',
-                'pass' => 'dev',
+                'password' => 'dev',
             ]
         ],
         ]

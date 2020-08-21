@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Service\Order;
+namespace App\Service\Order\DTO;
 
 /**
  * Class OrderDTO
+ *
  * @package App\Service\Order
  */
 final class OrderDTO implements \JsonSerializable
@@ -15,27 +16,27 @@ final class OrderDTO implements \JsonSerializable
     private $id;
 
     /**
-     * @var int
-     */
-    private $price;
-
-    /**
      * @var string
      */
     private $typePayment;
+
+    /**
+     * @var int
+     */
+    private $amount;
 
     /**
      * Order constructor.
      *
      * @param string $id
      * @param string $typePayment
-     * @param float  $price
+     * @param int    $amount
      */
-    public function __construct(string $id, string $typePayment, float $price)
+    public function __construct(string $id, string $typePayment, int $amount)
     {
         $this->id = $id;
         $this->typePayment = $typePayment;
-        $this->price = $price;
+        $this->amount = $amount;
     }
 
 
@@ -45,9 +46,9 @@ final class OrderDTO implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'type_payment' => $this->typePayment,
-            'price' => $this->price,
+            'id' => $this->getId(),
+            'type_payment' => $this->getTypePayment(),
+            'amount' => $this->getAmount(),
         ];
     }
 
@@ -59,13 +60,6 @@ final class OrderDTO implements \JsonSerializable
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getPrice(): int
-    {
-        return $this->price;
-    }
 
     /**
      * @return string
@@ -73,5 +67,13 @@ final class OrderDTO implements \JsonSerializable
     public function getTypePayment(): string
     {
         return $this->typePayment;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAmount(): int
+    {
+        return $this->amount;
     }
 }

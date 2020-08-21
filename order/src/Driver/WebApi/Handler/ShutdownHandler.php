@@ -7,7 +7,12 @@ use App\Driver\WebApi\ResponseEmitter\ResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpInternalServerErrorException;
 
-class ShutdownHandler
+/**
+ * Class ShutdownHandler
+ *
+ * @package App\Driver\WebApi\Handler
+ */
+final class ShutdownHandler
 {
     /**
      * @var Request
