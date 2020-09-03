@@ -1,6 +1,6 @@
-# Services
+# API Checkout Transparent 
 
-## Checkout
+## Checkout (Simulate integration)
     - Collects payment data from the buyer and sends it to the transaction service.
     
     - This service will be written in JavaScript using the Vue.js.

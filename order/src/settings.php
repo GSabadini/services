@@ -8,21 +8,20 @@ return function (ContainerBuilder $containerBuilder) {
     // Global Settings Object
     $containerBuilder->addDefinitions(
         [
-        'settings' => [
-            'displayErrorDetails' => true, // Should be set to false in production
-            'logger' => [
-                'name' => 'app-order',
-        //                'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
-                'path' => 'php://stdout',
-                'level' => Logger::DEBUG,
+            'settings' => [
+                'displayErrorDetails' => true, // Should be set to false in production
+                'logger' => [
+                    'name' => 'app-order',
+            //                'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
+                    'path' => 'php://stdout',
+                    'level' => Logger::DEBUG,
+                ],
+                'mysql' => [
+                    'dns' => "mysql:host=mysql-order;dbname=orders",
+                    'username' => 'root',
+                    'password' => 'dev',
+                ],
             ],
-            'mysql' => [
-                'host' => 'mysql-order',
-                'database' => 'orders',
-                'user' => 'dev',
-                'password' => 'dev',
-            ]
         ],
-        ]
     );
 };

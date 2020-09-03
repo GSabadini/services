@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Driver\WebApi\Handler\HttpErrorHandler;
-use App\Driver\WebApi\Handler\ShutdownHandler;
-use App\Driver\WebApi\ResponseEmitter\ResponseEmitter;
+use App\Infrastructure\Driver\WebApi\Handler\HttpErrorHandler;
+use App\Infrastructure\Driver\WebApi\Handler\ShutdownHandler;
+use App\Infrastructure\Driver\WebApi\ResponseEmitter\ResponseEmitter;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use DI\ContainerBuilder;
@@ -21,12 +22,12 @@ final class App
     /**
      * @var \Slim\App
      */
-    private $app;
+    private \Slim\App $app;
 
     /**
      * @var
      */
-    private $requestGlobal;
+    private ServerRequestInterface $requestGlobal;
 
     /**
      * App constructor.

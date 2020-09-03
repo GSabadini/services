@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-use App\Driver\WebApi\Action\Health\CheckHealthAction;
+use App\Infrastructure\Driver\WebApi\Action\Health\CheckHealthAction;
+use App\Infrastructure\Driver\WebApi\Action\Order\CreateOrderAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
-use App\Driver\WebApi\Action\Order\CreateOrderAction;
 
 return function (App $app) {
     $app->options(
@@ -18,7 +18,9 @@ return function (App $app) {
 
     $app->group(
         '/v1', function (Group $group) {
-            $group->get('/health', CheckHealthAction::class)->setName('check_health');
+            $group
+                ->get('/health', CheckHealthAction::class)
+                ->setName('check_health');
 
             $group
                 ->post('/orders', CreateOrderAction::class)

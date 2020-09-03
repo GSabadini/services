@@ -1,17 +1,23 @@
 <?php
 declare(strict_types=1);
 
-use App\Domain\Order\OrderRepository;
-use App\Driven\Database\DatabaseAdapter;
-use App\Service\Order\CreateOrder;
-use App\Service\Order\CreateOrderService;
+use App\Application\Service\Order\CreateOrderService;
+use App\Application\Service\Order\CreateOrderServiceInterface;
+use App\Domain\Order\Repository\OrderRepositoryInterface;
+use App\Infrastructure\Driven\Database\Connection;
+use App\Infrastructure\Driven\Database\DatabaseAdapter;
+use App\Infrastructure\Driven\Database\Repository\Order\OrderRepository;
 use DI\ContainerBuilder;
+use Monolog\Formatter\JsonFormatter;
+use Monolog\Processor\HostnameProcessor;
+use Monolog\Processor\MemoryPeakUsageProcessor;
+use Monolog\Processor\MemoryUsageProcessor;
+use Monolog\Processor\WebProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
-use App\Driven\Database\Repository\Order\OrderRepoInMemory;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions(
@@ -22,42 +28,58 @@ return function (ContainerBuilder $containerBuilder) {
                 $loggerSettings = $settings['logger'];
                 $logger = new Logger($loggerSettings['name']);
 
-                $processor = new UidProcessor();
-                $logger->pushProcessor($processor);
+                $UidProcessor = new UidProcessor();
+                $logger->pushProcessor($UidProcessor);
+
+                $webProcessor = new WebProcessor();
+                $logger->pushProcessor($webProcessor);
+
+                $memUsageProcessor = new MemoryUsageProcessor();
+                $logger->pushProcessor($memUsageProcessor);
+
+                $memPeakUsageProcessor = new MemoryPeakUsageProcessor();
+                $logger->pushProcessor($memPeakUsageProcessor);
+
+                $webProcessor = new WebProcessor();
+                $logger->pushProcessor($webProcessor);
+
+                $hostNameProcessor = new HostnameProcessor();
+                $logger->pushProcessor($hostNameProcessor);
 
                 $handler = new StreamHandler($loggerSettings['path'], $loggerSettings['level']);
                 $logger->pushHandler($handler);
 
+                $formatter = new JsonFormatter();
+                $handler->setFormatter($formatter);
+
                 return $logger;
             },
-        //            Connection::class => function (ContainerInterface $c) {
-        //                $logger = $c->get(LoggerInterface::class);
-        //
-        //                try {
-        //                    $settings = $c->get('settings');
-        //
-        //                    $dns = sprintf("mysql:host=%s;dbname=%s", $settings['mysql']['host'], $settings['mysql']['database']);
-        //                    $conn = new PDO(
-        //                        $dns,
-        //                        $settings['mysql']['username'],
-        //                        $settings['mysql']['pass']
-        //                    );
-        //                    // set the PDO error mode to exception
-        //                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //                    echo "Connected successfully";
-        //                    return new DatabaseAdapter($conn, $logger);
-        //                } catch(PDOException $e) {
-        //                    $logger->info("Connection failed: " . $e->getMessage());
-        //                }
-        //            },
-            OrderRepository::class => function (ContainerInterface $c) {
-                return new OrderRepoInMemory('');
+            Connection::class => function (ContainerInterface $c) {
+                $logger = $c->get(LoggerInterface::class);
+
+                try {
+                    $settings = $c->get('settings');
+
+                    $conn = new PDO(
+                        $settings['mysql']['dns'],
+                        $settings['mysql']['username'],
+                        $settings['mysql']['password'],
+                        [
+                            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        ]
+                    );
+
+                    $logger->info("Connected database successfully");
+                    return new DatabaseAdapter($conn, $logger);
+                } catch(PDOException $e) {
+                    $logger->info("Connection database failed: " . $e->getMessage());
+                }
             },
-        //            OrderRepository::class => function (ContainerInterface $c) {
-        //                return new OrderRepoMySQL($c->get(Connection::class));
-        //            },
-            CreateOrderService::class => function (ContainerInterface $c) {
-                return new CreateOrder($c->get(OrderRepository::class), $c->get(LoggerInterface::class));
+            OrderRepositoryInterface::class => function (ContainerInterface $c) {
+                return new OrderRepository($c->get(LoggerInterface::class), $c->get(Connection::class));
+            },
+            CreateOrderServiceInterface::class => function (ContainerInterface $c) {
+                return new CreateOrderService($c->get(LoggerInterface::class), $c->get(OrderRepositoryInterface::class));
             },
         ]
     );
