@@ -23,22 +23,29 @@ final class Order
     private string $typePayment;
 
     /**
+     * @var array
+     */
+    private array $items;
+
+    /**
      * @var int
      */
-    private int $amount;
+    private int $price;
 
     /**
      * Order constructor.
      *
      * @param Uuid $id
      * @param string $typePayment
-     * @param int $amount
+     * @param array $items
+     * @param int $price
      */
-    public function __construct(Uuid $id, string $typePayment, int $amount)
+    public function __construct(Uuid $id, string $typePayment, array $items, int $price)
     {
         $this->id = $id;
         $this->typePayment = $typePayment;
-        $this->amount = $amount;
+        $this->items = $items;
+        $this->price = $price;
     }
 
     /**
@@ -52,9 +59,9 @@ final class Order
     /**
      * @return int
      */
-    public function getAmount(): int
+    public function getPrice(): int
     {
-        return $this->amount;
+        return $this->price;
     }
 
     /**
@@ -63,5 +70,13 @@ final class Order
     public function getTypePayment(): string
     {
         return $this->typePayment;
+    }
+
+    /**
+     * @return array
+     */
+    public function getItems(): array
+    {
+        return $this->items;
     }
 }

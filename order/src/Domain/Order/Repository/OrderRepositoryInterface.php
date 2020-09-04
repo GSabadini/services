@@ -8,7 +8,6 @@ use App\Domain\Order\Exception\CreateOrderException;
 
 /**
  * Interface OrderRepositoryInterface
- *
  * @package App\Domain\Order\Repository
  */
 interface OrderRepositoryInterface
@@ -18,4 +17,9 @@ interface OrderRepositoryInterface
      * @throws CreateOrderException
      */
     public function create(Order $order): void;
+
+    /**
+     * @return mixed
+     */
+    public function findAll();
 }

@@ -6,10 +6,10 @@ namespace App\Application\Service\Order;
 use App\Application\Service\Order\DTO\OrderDTO;
 
 /**
- * Interface CreateOrderServiceInterface
+ * Interface CreateOrderInterface
  * @package App\Application\Service\Order
  */
-interface CreateOrderServiceInterface
+interface CreateOrderInterface
 {
     /**
      * @param OrderDTO $dto

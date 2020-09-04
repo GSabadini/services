@@ -34,31 +34,6 @@ final class DatabaseAdapter implements Database
         $this->logger = $logger;
     }
 
-    public function beginTransaction(): void
-    {
-        $this->connection->beginTransaction();
-    }
-
-    public function commit(): void
-    {
-        $this->connection->commit();
-    }
-
-    public function rollback(): void
-    {
-        $this->connection->rollBack();
-    }
-
-    public function close(): void
-    {
-        // TODO: Implement close() method.
-    }
-
-    public function prepare(): void
-    {
-        // TODO: Implement prepare() method.
-    }
-
     public function exec($statement): void
     {
         $this->connection->exec($statement);
@@ -67,5 +42,14 @@ final class DatabaseAdapter implements Database
     public function query($statement): void
     {
         $this->connection->query($statement);
+    }
+
+    /**
+     * @param  $statement
+     * @return \PDOStatement
+     */
+    public function prepare($statement): \PDOStatement
+    {
+        return $this->connection->prepare($statement);
     }
 }

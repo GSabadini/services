@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Domain\ValueObject;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
-use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class Uuid

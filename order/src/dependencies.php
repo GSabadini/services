@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-use App\Application\Service\Order\CreateOrderService;
-use App\Application\Service\Order\CreateOrderServiceInterface;
+use App\Application\Service\Order\CreateOrder;
+use App\Application\Service\Order\CreateOrderInterface;
+use App\Application\Service\Order\FindAllOrder;
+use App\Application\Service\Order\FindAllOrderInterface;
 use App\Domain\Order\Repository\OrderRepositoryInterface;
 use App\Infrastructure\Driven\Database\Connection;
 use App\Infrastructure\Driven\Database\DatabaseAdapter;
@@ -78,8 +80,11 @@ return function (ContainerBuilder $containerBuilder) {
             OrderRepositoryInterface::class => function (ContainerInterface $c) {
                 return new OrderRepository($c->get(LoggerInterface::class), $c->get(Connection::class));
             },
-            CreateOrderServiceInterface::class => function (ContainerInterface $c) {
-                return new CreateOrderService($c->get(LoggerInterface::class), $c->get(OrderRepositoryInterface::class));
+            CreateOrderInterface::class => function (ContainerInterface $c) {
+                return new CreateOrder($c->get(LoggerInterface::class), $c->get(OrderRepositoryInterface::class));
+            },
+            FindAllOrderInterface::class => function (ContainerInterface $c) {
+                return new FindAllOrder($c->get(LoggerInterface::class), $c->get(OrderRepositoryInterface::class));
             },
         ]
     );

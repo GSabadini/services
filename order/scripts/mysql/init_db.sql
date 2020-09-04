@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
   `id` varchar(36) NOT NULL,
+  `items` TEXT NOT NULL,
   `type_payment` varchar(255) NOT NULL,
   `price` float NOT NULL
 );

@@ -6,10 +6,10 @@ namespace App\Domain\Order\Exception;
 use Exception;
 
 /**
- * Class CreateOrderException
+ * Class FindAllOrderException
  * @package App\Domain\Order\Exception
  */
-class CreateOrderException extends \Exception
+final class FindAllOrderException extends \Exception
 {
     public function __construct($message = 'create_order_error', $code = 0, Exception $previous = null)
     {

@@ -21,7 +21,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/unit/"
+            "Tests\\Unit\\": "tests/unit/",
+            "Tests\\Integration\\": "tests/integration/"
         }
     },
     "scripts": {
@@ -29,7 +30,7 @@
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "sniffer": "./vendor/bin/phpcbf src/",
         "stan": "./vendor/bin/phpstan analyse src/",
-        "mess": "./vendor/bin/phpmd src/ phpmd.xml",
+        "mess": "./vendor/bin/phpmd src/ text  phpmd.xml",
         "check": [
             "@sniffer",
             "@stan",

@@ -1,6 +1,6 @@
 # Order
 
-Payload received
+Payload
 ```json
     {
         "description": "Games",
@@ -19,6 +19,6 @@ Payload received
             }
         ],
         "type_payment": "credit_card",
-        "total": 100   
+        "price": 100   
     }
 ```

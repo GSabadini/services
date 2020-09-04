@@ -11,11 +11,11 @@ use App\Domain\ValueObject\Uuid;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class CreateOrderService
+ * Class CreateOrder
  *
  * @package App\Application\Service\Order
  */
-final class CreateOrderService implements CreateOrderServiceInterface
+final class CreateOrder implements CreateOrderInterface
 {
     /**
      * @var LoggerInterface
@@ -28,7 +28,7 @@ final class CreateOrderService implements CreateOrderServiceInterface
     private OrderRepositoryInterface $repository;
 
     /**
-     * CreateOrderService constructor.
+     * CreateOrder constructor.
      *
      * @param LoggerInterface          $logger
      * @param OrderRepositoryInterface $repository
@@ -40,7 +40,7 @@ final class CreateOrderService implements CreateOrderServiceInterface
     }
 
     /**
-     * @param OrderDTO $dto
+     * @param  OrderDTO $dto
      * @throws CreateOrderException
      * @throws \Exception
      */
@@ -50,7 +50,8 @@ final class CreateOrderService implements CreateOrderServiceInterface
             new Order(
                 Uuid::random(),
                 $dto->getTypePayment(),
-                $dto->getAmount()
+                $dto->getItems(),
+                $dto->getPrice()
             )
         );
 

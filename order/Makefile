@@ -26,7 +26,7 @@ stan:
 ##https://phpstan.org/user-guide/rule-levels
 
 mess:
-	${DOCKER_EXEC} composer mess
+	${DOCKER_EXEC} composer mess text cleancode
 
 test:
 	${DOCKER_EXEC} composer test
