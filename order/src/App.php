@@ -43,7 +43,7 @@ final class App
         $this->app = AppFactory::create();
 
         $this->registerRoutes();
-        //        $this->registerMiddlewares();
+        $this->registerMiddlewares();
 
         $this->app->addRoutingMiddleware();
         $this->app->addBodyParsingMiddleware();

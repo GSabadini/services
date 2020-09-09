@@ -7,6 +7,7 @@ use Exception;
 
 /**
  * Class CreateOrderException
+ *
  * @package App\Domain\Order\Exception
  */
 class CreateOrderException extends \Exception

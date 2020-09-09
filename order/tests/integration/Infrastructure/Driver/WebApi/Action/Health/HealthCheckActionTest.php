@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Infrastructure\Driver\WebApi\Action\Health;
 
-use PHPUnit\Framework\TestCase;
+use App\Infrastructure\Driver\WebApi\Action\ActionPayload;
+use Tests\Integration\TestCase;
 
 /**
  * Class HealthCheckActionTest
@@ -11,8 +12,17 @@ use PHPUnit\Framework\TestCase;
  */
 class HealthCheckActionTest extends TestCase
 {
-    public function testOne()
+    public function testHealthCheckAction()
     {
-        $this->assertTrue(true);
+        $app = $this->getAppInstance();
+
+        $request = $this->createRequest('GET', '/v1/health');
+        $response = $app->handle($request);
+
+        $payload = (string) $response->getBody();
+        $expectedPayload = new ActionPayload(200, ["status" => 'OK']);
+        $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
+
+        $this->assertEquals($serializedPayload, $payload);
     }
 }

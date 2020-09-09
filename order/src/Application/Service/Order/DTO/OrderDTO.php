@@ -29,8 +29,8 @@ final class OrderDTO implements \JsonSerializable
      * Order constructor.
      *
      * @param string $typePayment
-     * @param array $items
-     * @param int $price
+     * @param array  $items
+     * @param int    $price
      */
     public function __construct(string $typePayment, array $items, int $price)
     {

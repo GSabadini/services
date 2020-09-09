@@ -35,10 +35,10 @@ final class Order
     /**
      * Order constructor.
      *
-     * @param Uuid $id
+     * @param Uuid   $id
      * @param string $typePayment
-     * @param array $items
-     * @param int $price
+     * @param array  $items
+     * @param int    $price
      */
     public function __construct(Uuid $id, string $typePayment, array $items, int $price)
     {

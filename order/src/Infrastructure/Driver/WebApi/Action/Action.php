@@ -50,9 +50,8 @@ abstract class Action
      * @param  array    $args
      * @return Response
      * @throws HttpNotFoundException
-     * @throws HttpBadRequestException
      */
-    public function __invoke(Request $request, Response $response, $args): Response
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->request = $request;
         $this->response = $response;
@@ -61,7 +60,6 @@ abstract class Action
         try {
             return $this->action();
         } catch (\Exception $e) {
-            /* TODO ver Exception correta para retornar do Service/Domain */
             throw new HttpNotFoundException($this->request, $e->getMessage());
         }
     }

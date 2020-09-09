@@ -8,6 +8,7 @@ use App\Domain\Order\Exception\CreateOrderException;
 
 /**
  * Interface OrderRepositoryInterface
+ *
  * @package App\Domain\Order\Repository
  */
 interface OrderRepositoryInterface

@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Class FindAllOrder
+ *
  * @package App\Application\Service\Order
  */
 final class FindAllOrder implements FindAllOrderInterface
@@ -24,7 +25,8 @@ final class FindAllOrder implements FindAllOrderInterface
 
     /**
      * FindAllOrder constructor.
-     * @param LoggerInterface $logger
+     *
+     * @param LoggerInterface          $logger
      * @param OrderRepositoryInterface $repository
      */
     public function __construct(LoggerInterface $logger, OrderRepositoryInterface $repository)

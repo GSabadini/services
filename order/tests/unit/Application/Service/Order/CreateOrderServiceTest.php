@@ -6,6 +6,7 @@ use App\Application\Service\Order\CreateOrder;
 use App\Domain\Order\Entity\Order;
 use App\Domain\Order\Repository\OrderRepositoryInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class CreateOrderServiceTest extends TestCase
 {
@@ -18,13 +19,13 @@ class CreateOrderServiceTest extends TestCase
 //    {
 //        $order = new Order("id", "credit-card", 70.45);
 //
-//        $userRepositoryProphecy = $this->prophesize(OrderRepositoryInterface::class);
-//        $userRepositoryProphecy
+//        $loggerProphecy = $this->prophesize(LoggerInterface::class);
+//        $orderRepo = $this->prophesize(OrderRepositoryInterface::class);
+//        $orderRepo
 //            ->create()
 //            ->shouldBeCalledOnce();
 //
-//        $mockOrderDAO =
-//        $service = new CreateOrder();
+//        $service = new CreateOrder($loggerProphecy, $orderRepo);
 //        $result = $service->create($order);
 //
 //        $this->assertEquals($result, $order);

@@ -5,6 +5,7 @@ namespace App\Application\Service\Order;
 
 /**
  * Interface FindAllOrderInterface
+ *
  * @package App\Application\Service\Order
  */
 interface FindAllOrderInterface

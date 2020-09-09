@@ -7,6 +7,7 @@ use App\Application\Service\Order\DTO\OrderDTO;
 
 /**
  * Interface CreateOrderInterface
+ *
  * @package App\Application\Service\Order
  */
 interface CreateOrderInterface

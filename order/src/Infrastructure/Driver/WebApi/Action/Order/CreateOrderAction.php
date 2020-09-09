@@ -29,7 +29,7 @@ final class CreateOrderAction extends Action
     /**
      * CreateOrderAction constructor.
      *
-     * @param LoggerInterface             $logger
+     * @param LoggerInterface      $logger
      * @param CreateOrderInterface $service
      */
     public function __construct(LoggerInterface $logger, CreateOrderInterface $service)
@@ -56,10 +56,12 @@ final class CreateOrderAction extends Action
             $this->service->create($dto);
 
             $this->logger->info("Create order action successful");
+
             return $this->respondWithData(null, 201);
         } catch (\Exception $e) {
             $this->logger->error("Create order action failed: " . $e->getMessage());
-            return $this->respondWithData(['error' => $e->getMessage()], 400);
+
+            return $this->respondWithData(['error' => $e->getMessage()], $e->getCode());
         }
     }
 }

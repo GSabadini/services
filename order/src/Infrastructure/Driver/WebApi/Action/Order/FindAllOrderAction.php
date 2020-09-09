@@ -23,7 +23,7 @@ class FindAllOrderAction extends Action
     /**
      * CreateOrderAction constructor.
      *
-     * @param LoggerInterface $logger
+     * @param LoggerInterface       $logger
      * @param FindAllOrderInterface $service
      */
     public function __construct(LoggerInterface $logger, FindAllOrderInterface $service)
@@ -38,10 +38,12 @@ class FindAllOrderAction extends Action
         try {
             $result = $this->service->findAll();
             $this->logger->info("Find all order action successful");
+
             return $this->respondWithData($result, 201);
         } catch (\Exception $e) {
             $this->logger->error("Find all order action failed: " . $e->getMessage());
-            return $this->respondWithData(['error' => $e->getMessage()], 400);
+
+            return $this->respondWithData(['error' => $e->getMessage()], $e->getCode());
         }
     }
 }
