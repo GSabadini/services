@@ -7,7 +7,9 @@ use App\Infrastructure\Driver\WebApi\Handler\HttpErrorHandler;
 use App\Infrastructure\Driver\WebApi\Handler\ShutdownHandler;
 use App\Infrastructure\Driver\WebApi\ResponseEmitter\ResponseEmitter;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use DI\ContainerBuilder;
@@ -17,7 +19,7 @@ use DI\ContainerBuilder;
  *
  * @package App
  */
-final class App
+final class App implements RequestHandlerInterface
 {
     /**
      * @var \Slim\App
@@ -123,5 +125,10 @@ final class App
     private function getContainer(): ContainerInterface
     {
         return $this->app->getContainer();
+    }
+
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        return $this->app->handle($request);
     }
 }

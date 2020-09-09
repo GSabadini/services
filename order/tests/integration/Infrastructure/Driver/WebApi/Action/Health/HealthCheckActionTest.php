@@ -14,7 +14,7 @@ class HealthCheckActionTest extends TestCase
 {
     public function testHealthCheckAction()
     {
-        $app = $this->getAppInstance();
+        $app = $this->getAppInstanceSingleton();
 
         $request = $this->createRequest('GET', '/v1/health');
         $response = $app->handle($request);

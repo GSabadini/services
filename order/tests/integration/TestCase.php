@@ -13,16 +13,22 @@ use Slim\Psr7\Uri;
 
 class TestCase extends PHPUnit_TestCase
 {
-    /**
-     * @var null
-     */
-    private $app = null;
+    protected $app = null;
 
     /**
      * @return \App\App
      * @throws Exception
      */
-    protected function getAppInstance(): \App\App
+    protected function getAppInstanceSingleton(): \App\App
+    {
+        if (!$this->app) {
+            return $this->getAppInstance();
+        }
+
+        return $this->app;
+    }
+
+    private function getAppInstance(): \App\App
     {
         if (!$this->app) {
             return new \App\App();
