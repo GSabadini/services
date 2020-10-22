@@ -1,0 +1,41 @@
+{
+    "name": "gsabadini/order",
+    "require": {
+        "php": "^7.4",
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.1",
+        "php-di/php-di": "^6.2",
+        "monolog/monolog": "^2.1",
+        "ramsey/uuid": "^3.5"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*",
+        "phpunit/phpunit": "^6.4",
+        "phpstan/phpstan": "^0.12.32",
+        "phpmd/phpmd" : "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Unit\\": "tests/unit/",
+            "Tests\\Integration\\": "tests/integration/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "sniffer": "./vendor/bin/phpcbf src/",
+        "stan": "./vendor/bin/phpstan analyse src/",
+        "mess": "./vendor/bin/phpmd src/ text  phpmd.xml",
+        "check": [
+            "@sniffer",
+            "@stan",
+            "@mess",
+            "@test"
+        ]
+    }
+}
